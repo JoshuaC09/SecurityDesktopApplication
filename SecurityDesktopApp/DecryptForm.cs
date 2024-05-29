@@ -6,22 +6,19 @@ namespace SecurityDesktopApp
     public partial class DecryptForm : Form
     {
         private EncryptForm encryptForm; // Declare a private field to store the EncryptForm instance
-
         private System.Windows.Forms.Timer timerResetIcon = new System.Windows.Forms.Timer();
-        public EncryptForm EncryptForm // Declare a property to set the EncryptForm instance
-        {
-            set { encryptForm = value; }
-        }
 
-        private const string EncryptionKey = "In the eye of the beholder doth lie beauty's true essence, for each gaze doth fashion its own fair visage";
+        public string UserEncryptionKey { get; set; } // Add this property
+
+        private const string DefaultEncryptionKey = "In the eye of the beholder doth lie beauty's true essence, for each gaze doth fashion its own fair visage";
         private readonly byte[] salt = new byte[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f };
 
-        public DecryptForm()
+        public DecryptForm(string userEncryptionKey)
         {
             InitializeComponent();
             timerResetIcon.Interval = 1000; // Set the delay to 1 second (adjust as needed)
             timerResetIcon.Tick += TimerResetIcon_Tick;
-
+            UserEncryptionKey = userEncryptionKey; // Store the passed key
         }
 
         private void TimerResetIcon_Tick(object sender, EventArgs e)
@@ -34,7 +31,10 @@ namespace SecurityDesktopApp
             timerResetIcon.Stop();
         }
 
-
+        public EncryptForm EncryptForm
+        {
+            set { encryptForm = value; }
+        }
 
         private void btnEncryptionForm_Click(object sender, EventArgs e)
         {
@@ -46,7 +46,6 @@ namespace SecurityDesktopApp
                 this.Hide();
             }
         }
-
 
         private void ResetForm()
         {
@@ -67,13 +66,16 @@ namespace SecurityDesktopApp
             string encryptedUserName = txtUserName2.Text;
             string encryptedPassword = txtPassword2.Text;
 
+            // Use the passed user encryption key if available, otherwise use the default key
+            string decryptionKey = !string.IsNullOrWhiteSpace(UserEncryptionKey) ? UserEncryptionKey : DefaultEncryptionKey;
+
             // Check if the TextBoxes are not empty
             if (!string.IsNullOrWhiteSpace(encryptedUserName) && !string.IsNullOrWhiteSpace(encryptedPassword))
             {
                 try
                 {
-                    // Create an instance of the StringEncryptionService with the same password and salt
-                    var encryptionService = new SecurityService(EncryptionKey, salt);
+                    // Create an instance of the StringEncryptionService with the chosen key and salt
+                    var encryptionService = new SecurityService(decryptionKey, salt);
 
                     // Decrypt the encrypted data
                     string decryptedUserName = encryptionService.Decrypt(encryptedUserName);

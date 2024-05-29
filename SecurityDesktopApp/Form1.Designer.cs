@@ -42,6 +42,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pb_CopyEnPass = new System.Windows.Forms.PictureBox();
             this.pb_CopyEnUser = new System.Windows.Forms.PictureBox();
+            this.SecretKeyUserInput = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb_CopyEnPass)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_CopyEnUser)).BeginInit();
             this.SuspendLayout();
@@ -187,12 +189,30 @@
             this.pb_CopyEnUser.TabStop = false;
             this.pb_CopyEnUser.Click += new System.EventHandler(this.pb_CopyEnUser_Click);
             // 
+            // SecretKeyUserInput
+            // 
+            this.SecretKeyUserInput.Location = new System.Drawing.Point(24, 30);
+            this.SecretKeyUserInput.Name = "SecretKeyUserInput";
+            this.SecretKeyUserInput.Size = new System.Drawing.Size(100, 22);
+            this.SecretKeyUserInput.TabIndex = 19;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 9);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 16);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Change Key?";
+            // 
             // EncryptForm
             // 
             this.AcceptButton = this.btnEncrypt;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(776, 297);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.SecretKeyUserInput);
             this.Controls.Add(this.pb_CopyEnUser);
             this.Controls.Add(this.pb_CopyEnPass);
             this.Controls.Add(this.btnDecryptionForm);
@@ -233,6 +253,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pb_CopyEnPass;
         private System.Windows.Forms.PictureBox pb_CopyEnUser;
+        private System.Windows.Forms.TextBox SecretKeyUserInput;
+        private System.Windows.Forms.Label label3;
     }
 }
 
